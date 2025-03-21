@@ -1,5 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Drawing;
+using Colorful;
+using Console = Colorful.Console;
 
 namespace project1
 {
@@ -34,7 +37,7 @@ namespace project1
                         cmd.ExecuteNonQuery();
                     }
                 }
-                Console.WriteLine("Data inserted successfully!");
+                Console.WriteLine("\nProduct is added successfully!", Color.Green);
             }
             catch (Exception ex)
             {
@@ -50,11 +53,11 @@ namespace project1
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM user WHERE username = @username AND password = @password";
+                    string query = "SELECT COUNT(*) FROM users WHERE username = @username AND userPassword = @userPassword";
                     using (MySqlCommand cmd = new MySqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", userPassword);
+                        cmd.Parameters.AddWithValue("@userPassword", userPassword);
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
                     }
@@ -70,7 +73,7 @@ namespace project1
         }
 
 
-        public void InsertUser(string username, string password)
+        public void InsertUser(string username, string userPassword)
         {
             try
             {
@@ -81,11 +84,11 @@ namespace project1
                     using (MySqlCommand cmd = new MySqlCommand(query, connection)) // users kasi hindi user..................!!!!!!!!
                     {
                         cmd.Parameters.AddWithValue("@username", username); 
-                        cmd.Parameters.AddWithValue("@userPassword", password); 
+                        cmd.Parameters.AddWithValue("@userPassword", userPassword); 
                         cmd.ExecuteNonQuery();
                     }
                 }
-                Console.WriteLine("Data inserted successfully!");
+                Console.WriteLine("\nRegistered successfully!", Color.Green);
             }
             catch (Exception ex)
             {
