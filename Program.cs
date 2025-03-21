@@ -216,33 +216,44 @@ namespace project1
                 Thread.Sleep(2000);
                 return;
             }
+          
+            Connection conn = new Connection();
 
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine(@"
+            if (conn.CheckProductLimit())
+            {
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(@"
                             ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗
                             ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝
                             ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   
                             ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   
                             ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   
                             ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝", Color.Green);
+                 Console.Clear();
+                Console.WriteLine("Enter product name: ");
+                string productName = Console.ReadLine();
+                Console.WriteLine("Enter product description: ");
+                string productDescription = Console.ReadLine();
+                Console.WriteLine("Enter product price: ");
+                if (!int.TryParse(Console.ReadLine(), out int productPrice))
+                {
+                    Console.WriteLine("Invalid price. Please enter a valid number.", Color.Red);
+                    Thread.Sleep(2000);
+                    return;
+                }
 
-            Console.WriteLine("Enter product name: ");
-            string productName = Console.ReadLine();
-            Console.WriteLine("Enter product description: ");
-            string productDescription = Console.ReadLine();
-            Console.WriteLine("Enter product price: ");
-            if (!int.TryParse(Console.ReadLine(), out int productPrice))
-            {
-                Console.WriteLine("Invalid price. Please enter a valid number.", Color.Red);
+
+                conn.InsertProduct(productName, productPrice, productDescription);
                 Thread.Sleep(2000);
-                return;
+                Console.Clear();
+            } else
+            {
+                
+                Console.WriteLine("Product Limit Reached!");
+                Thread.Sleep(2000);
             }
-
-            Connection conn = new Connection();
-            conn.InsertProduct(productName, productPrice, productDescription);
-            Thread.Sleep(2000); 
-            Console.Clear();
+           
+            
         }
     }
 }

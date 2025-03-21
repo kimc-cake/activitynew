@@ -45,6 +45,28 @@ namespace project1
             }
         }
 
+        public bool CheckProductLimit()
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT COUNT(*) FROM products";
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        return count < 14;
+                    }
+                }
+            }catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+                return false;
+            }
+        }
+
 
         public bool loginform(string username, string userPassword)
         {
